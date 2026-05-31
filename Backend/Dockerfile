@@ -1,15 +1,28 @@
-FROM node:20
+# Base image
+FROM node:20-alpine
 
+# Thiết lập thư mục làm việc
 WORKDIR /app
 
+# Sao chép package.json và package-lock.json
 COPY package*.json ./
 
-RUN npm install
+# Cài đặt dependencies (bao gồm cả devDependencies để chạy prisma generate)
+RUN npm ci
 
-COPY . .
-
+# Sao chép thư mục prisma và sinh Prisma Client
+COPY prisma ./prisma
 RUN npx prisma generate
 
+# Sao chép toàn bộ mã nguồn còn lại
+COPY . .
+
+# Khai báo biến môi trường mặc định
+ENV PORT=5000
+ENV NODE_ENV=production
+
+# Mở cổng 5000
 EXPOSE 5000
 
-CMD ["npm", "run", "dev"]
+# Khởi chạy ứng dụng
+CMD ["npm", "start"]
