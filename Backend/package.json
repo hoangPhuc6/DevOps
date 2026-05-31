@@ -24,5 +24,9 @@
     "nodemailer": "^6.9.15",
     "swagger-ui-express": "^5.0.1",
     "yaml": "^2.5.1"
+  },
+  "devDependencies": {
+    "@prisma/client": "^6.19.3",
+    "prisma": "^6.19.3"
   }
 }
